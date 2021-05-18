@@ -35,6 +35,18 @@ public class DressShop {
 		return averagePrice;
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setAveragePrice(int avgPrice) {
+		this.averagePrice = avgPrice;		
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	@Override
 	public String toString() {
 		return "DressShop [id=" + id + ", name=" + name + ", averagePrice=" + averagePrice + "]";
@@ -69,18 +81,6 @@ public class DressShop {
 			return false;
 		}
 		return true;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setAveragePrice(int avgPrice) {
-		this.averagePrice = avgPrice;		
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 }
