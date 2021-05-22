@@ -1,0 +1,114 @@
+package com.examples.spring.project.controllers;
+
+import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
+import static io.restassured.module.mockmvc.RestAssuredMockMvc.standaloneSetup;
+import static org.hamcrest.text.IsEmptyString.emptyOrNullString;
+import static org.hamcrest.CoreMatchers.equalTo;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import org.mockito.ArgumentCaptor;
+import org.springframework.http.MediaType;
+
+
+import com.examples.spring.project.model.DressShop;
+import com.examples.spring.project.services.DressShopService;
+
+public class DressShopControllerRestAssuredTest {
+	
+	private DressShopService dressShopService;
+
+	@Before
+	public void setup() {
+		dressShopService = mock(DressShopService.class);
+		standaloneSetup(new DressShopRestController(dressShopService));
+	}
+
+	@Test
+	public void testAllDressShops() throws Exception {
+		when(dressShopService.getAllDressShops())
+				.thenReturn(Arrays.asList(new DressShop(Long.valueOf(1), "GAP", 15),
+						new DressShop(Long.valueOf(2), "Colt", 22)));
+		given().when().get("/api/dressShops").then().statusCode(200).assertThat().body("id[0]", equalTo(1), "name[0]",
+				equalTo("GAP"), "averagePrice[0]", equalTo(15), "id[1]", equalTo(2), "name[1]", equalTo("Colt"),
+				"averagePrice[1]", equalTo(22));
+		verify(dressShopService, times(1)).getAllDressShops();
+	}
+
+	@Test
+	public void testFindByIdWithExistingDressShop() throws Exception {
+		when(dressShopService.getDressShopById(Long.valueOf(1)))
+				.thenReturn(new DressShop(Long.valueOf(1), "Diesel", 30));
+		given().when().get("/api/dressShops/1").then().statusCode(200).assertThat().body("id", equalTo(1), "name",
+				equalTo("Diesel"), "averagePrice", equalTo(30));
+		verify(dressShopService, times(1)).getDressShopById(Long.valueOf(1));
+	}
+
+	@Test
+	public void testFindByIdWithNonExistingDressShop() throws Exception {
+		given().when().get("/api/dressShops/1").then().statusCode(200).contentType(emptyOrNullString());
+		verify(dressShopService, times(1)).getDressShopById(Long.valueOf(1));
+	}
+
+	@Test
+	public void testNewDressShop() throws Exception {
+		
+		DressShop ds = new DressShop(null, "Adidas", 20);
+
+		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(ds).when().post("/api/dressShops/new").then()
+				.statusCode(200);
+		ArgumentCaptor<DressShop> captor = ArgumentCaptor.forClass(DressShop.class);
+		verify(dressShopService, times(1)).saveIntoDb(captor.capture());
+		assertEquals(captor.getValue().getId(), ds.getId());
+		assertEquals(captor.getValue().getName(), ds.getName());
+		assertEquals(captor.getValue().getAveragePrice(), ds.getAveragePrice());
+	}
+	
+
+	@Test
+	public void testUpdateDressShop() throws Exception {  
+		when(dressShopService.getDressShopById(Long.valueOf(1)))
+				.thenReturn(new DressShop(Long.valueOf(1), "Nike", 20));
+		DressShop updated = new DressShop(Long.valueOf(1), "Puma", 21);
+		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(updated).when().put("/api/dressShops/update/1")
+				.then().statusCode(200);
+		verify(dressShopService, times(1)).saveIntoDb(updated);
+	}
+
+	@Test
+	public void testUpdateDressShopWithFakeId() throws Exception {
+		DressShop updated = new DressShop(Long.valueOf(1), "Gutteridge", 35);
+		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(updated).when().put("/api/dressShops/update/1")
+				.then().statusCode(200);
+		verify(dressShopService, times(1)).saveIntoDb(updated);
+
+	}
+
+	@Test
+	public void testDeleteDressShop() throws Exception {
+		DressShop ds = new DressShop(Long.valueOf(1), "Diesel", 30);
+		when(dressShopService.getDressShopById(Long.valueOf(1)))
+		.thenReturn(ds);
+		given().when().delete("/api/dressShops/delete/1").then().statusCode(200);
+		verify(dressShopService, times(1)).getDressShopById(Long.valueOf(1));
+		verify(dressShopService, times(1)).delete(ds);
+
+	}
+	
+	@Test
+	public void testDeleteDressShopNotExists() throws Exception {
+		DressShop ds = new DressShop();
+		given().when().delete("/api/dressShops/delete/1").then().statusCode(200);
+		verify(dressShopService, times(1)).getDressShopById(Long.valueOf(1));
+		verify(dressShopService, times(0)).delete(ds);
+	}
+}
