@@ -34,7 +34,7 @@ public class DressShopControllerRestAssuredTest {
 	}
 
 	@Test
-	public void testAllDressShops() throws Exception {
+	public void test_allDressShops() throws Exception {
 		when(dressShopService.getAllDressShops())
 				.thenReturn(Arrays.asList(new DressShop(Long.valueOf(1), "GAP", 15),
 						new DressShop(Long.valueOf(2), "Colt", 22)));
@@ -45,7 +45,7 @@ public class DressShopControllerRestAssuredTest {
 	}
 
 	@Test
-	public void testFindByIdWithExistingDressShop() throws Exception {
+	public void test_findByIdWithExistingDressShop() throws Exception {
 		when(dressShopService.getDressShopById(Long.valueOf(1)))
 				.thenReturn(new DressShop(Long.valueOf(1), "Diesel", 30));
 		given().when().get("/api/dressShops/1").then().statusCode(200).assertThat().body("id", equalTo(1), "name",
@@ -54,13 +54,13 @@ public class DressShopControllerRestAssuredTest {
 	}
 
 	@Test
-	public void testFindByIdWithNonExistingDressShop() throws Exception {
+	public void test_findByIdWithNonExistingDressShop() throws Exception {
 		given().when().get("/api/dressShops/1").then().statusCode(200).contentType(emptyOrNullString());
 		verify(dressShopService, times(1)).getDressShopById(Long.valueOf(1));
 	}
 
 	@Test
-	public void testNewDressShop() throws Exception {
+	public void test_newDressShop() throws Exception {
 		
 		DressShop ds = new DressShop(null, "Adidas", 20);
 
@@ -75,7 +75,7 @@ public class DressShopControllerRestAssuredTest {
 	
 
 	@Test
-	public void testUpdateDressShop() throws Exception {  
+	public void test_updateDressShop() throws Exception {  
 		when(dressShopService.getDressShopById(Long.valueOf(1)))
 				.thenReturn(new DressShop(Long.valueOf(1), "Nike", 20));
 		DressShop updated = new DressShop(Long.valueOf(1), "Puma", 21);
@@ -85,7 +85,7 @@ public class DressShopControllerRestAssuredTest {
 	}
 
 	@Test
-	public void testUpdateDressShopWithFakeId() throws Exception {
+	public void test_updateDressShopWithFakeId() throws Exception {
 		DressShop updated = new DressShop(Long.valueOf(1), "Gutteridge", 35);
 		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(updated).when().put("/api/dressShops/update/1")
 				.then().statusCode(200);
@@ -94,7 +94,7 @@ public class DressShopControllerRestAssuredTest {
 	}
 
 	@Test
-	public void testDeleteDressShop() throws Exception {
+	public void test_deleteDressShop() throws Exception {
 		DressShop ds = new DressShop(Long.valueOf(1), "Diesel", 30);
 		when(dressShopService.getDressShopById(Long.valueOf(1)))
 		.thenReturn(ds);
@@ -105,7 +105,7 @@ public class DressShopControllerRestAssuredTest {
 	}
 	
 	@Test
-	public void testDeleteDressShopNotExists() throws Exception {
+	public void test_deleteDressShopNotExists() throws Exception {
 		DressShop ds = new DressShop();
 		given().when().delete("/api/dressShops/delete/1").then().statusCode(200);
 		verify(dressShopService, times(1)).getDressShopById(Long.valueOf(1));
