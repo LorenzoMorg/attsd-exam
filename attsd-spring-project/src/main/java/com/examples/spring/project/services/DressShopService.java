@@ -20,12 +20,12 @@ public class DressShopService {
 		return dressShopRepository.findById(id).orElse(null);
 	}
 
-	public DressShop saveIntoDb(DressShop r) {	
-		return dressShopRepository.save(r);
+	public DressShop saveIntoDb(DressShop ds) {	
+		return dressShopRepository.save(ds);
 	}
 
-	public void delete(DressShop restaurant) {
-		dressShopRepository.delete(restaurant);
+	public void delete(DressShop ds) {
+		dressShopRepository.delete(ds);
 	}
 
 	public void deleteAll() {

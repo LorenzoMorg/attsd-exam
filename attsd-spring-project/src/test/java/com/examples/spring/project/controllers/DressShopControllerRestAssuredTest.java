@@ -39,8 +39,8 @@ public class DressShopControllerRestAssuredTest {
 				.thenReturn(Arrays.asList(new DressShop(Long.valueOf(1), "GAP", 15),
 						new DressShop(Long.valueOf(2), "Colt", 22)));
 		given().when().get("/api/dressShops").then().statusCode(200).assertThat().body("id[0]", equalTo(1), "name[0]",
-				equalTo("GAP"), "averagePrice[0]", equalTo(15), "id[1]", equalTo(2), "name[1]", equalTo("Colt"),
-				"averagePrice[1]", equalTo(22));
+				equalTo("GAP"), "targetPrice[0]", equalTo(15), "id[1]", equalTo(2), "name[1]", equalTo("Colt"),
+				"targetPrice[1]", equalTo(22));
 		verify(dressShopService, times(1)).getAllDressShops();
 	}
 
@@ -49,7 +49,7 @@ public class DressShopControllerRestAssuredTest {
 		when(dressShopService.getDressShopById(Long.valueOf(1)))
 				.thenReturn(new DressShop(Long.valueOf(1), "Diesel", 30));
 		given().when().get("/api/dressShops/1").then().statusCode(200).assertThat().body("id", equalTo(1), "name",
-				equalTo("Diesel"), "averagePrice", equalTo(30));
+				equalTo("Diesel"), "targetPrice", equalTo(30));
 		verify(dressShopService, times(1)).getDressShopById(Long.valueOf(1));
 	}
 
@@ -70,7 +70,7 @@ public class DressShopControllerRestAssuredTest {
 		verify(dressShopService, times(1)).saveIntoDb(captor.capture());
 		assertEquals(captor.getValue().getId(), ds.getId());
 		assertEquals(captor.getValue().getName(), ds.getName());
-		assertEquals(captor.getValue().getAveragePrice(), ds.getAveragePrice());
+		assertEquals(captor.getValue().getTargetPrice(), ds.getTargetPrice());
 	}
 	
 
