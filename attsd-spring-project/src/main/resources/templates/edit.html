@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>DressShops</title>
+</head>
+<body>
+<h1>DressShops</h1>
+	<div th:unless="${message.empty}">
+		<p th:text="${message}"></p>
+	</div>
+	<div th:if="${message.empty}">
+	<p> Insert the new dressShop </p>
+	</div>
+		<form name="dressShop_form" action="#" th:action="@{/save}"
+			th:object="${dressShop}" method="post">
+			<input type="hidden" th:field="*{id}" />
+			<p>
+				Name: <input type="text" th:field="*{name}" />
+			</p>
+			<p>
+				TargetPrice: <input type="text" th:field="*{targetPrice}" />
+			</p>
+			<button type="submit" name="btn_submit">Save</button>
+		</form>
+</body>
+</html>
