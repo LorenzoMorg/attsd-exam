@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>DressShops</title>
+</head>
+
+<body>
+	<h1>DressShops</h1>
+	<div th:if="${dressShops.empty}">
+		<div>No dressShops</div>
+	</div>
+	<div th:unless="${dressShops.empty}">
+		<table id="dressShop_table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>TargetPrice</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="dressShop : ${dressShops}">
+					<td th:text="${dressShop.name}"></td>
+					<td th:text="${dressShop.targetPrice}"></td>
+					<td><a id="edit" th:href='@{/edit(id=${dressShop.id})}'><button>Edit</button></a></td>
+					<td><a id="delete" th:href='@{/delete(id=${dressShop.id})}'><button>Delete</button></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div>
+		<p>
+			Click <a th:href="@{/new}">here</a> to add a new dressShop
+		</p>
+	</div>
+	<div th:unless="${dressShops.empty}">
+		<p>
+			Click <a th:href="@{/reset}">here</a> to delete all the dressShops
+		</p>
+	</div>
+
+</body>
+</html>

@@ -95,6 +95,6 @@ public class DressShopServiceWithMockBeanTest {
 		DressShop passedToRepository = captor.getValue();
 		assertEquals(Long.valueOf(1), passedToRepository.getId());
 		assertEquals("Lacoste", passedToRepository.getName());
-		assertEquals(18, passedToRepository.getAveragePrice());
+		assertEquals(18, passedToRepository.getTargetPrice());
 	}
 }

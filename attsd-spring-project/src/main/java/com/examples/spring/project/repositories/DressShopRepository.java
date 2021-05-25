@@ -11,8 +11,8 @@ import com.examples.spring.project.model.DressShop;
 public interface DressShopRepository extends JpaRepository<DressShop, Long> {
 
 
-	@Query("Select ds from DressShop ds where ds.averagePrice = :n")
-	List<DressShop> findAllDressShopsWithTheSameAveragePrice(@Param("n") int n);
+	@Query("Select ds from DressShop ds where ds.targetPrice = :n")
+	List<DressShop> findAllDressShopsWithTheSameTargetPrice(@Param("n") int n);
 	
 
 	@Query("Select ds from DressShop ds order by name")

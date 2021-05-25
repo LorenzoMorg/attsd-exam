@@ -12,15 +12,15 @@ public class DressShop {
 	@Id @GeneratedValue
 	private Long id;
 	private String name;
-	private int averagePrice;
+	private int targetPrice;
 	
 	public DressShop() {
 	}
 
-	public DressShop(Long id, String name, int averagePrice) {
+	public DressShop(Long id, String name, int targetPrice) {
 		this.id = id;
 		this.name = name;
-		this.averagePrice = averagePrice;
+		this.targetPrice = targetPrice;
 	}
 
 	public Long getId() {
@@ -31,16 +31,16 @@ public class DressShop {
 		return name;
 	}
 
-	public int getAveragePrice() {
-		return averagePrice;
+	public int getTargetPrice() {
+		return targetPrice;
 	}
 	
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public void setAveragePrice(int avgPrice) {
-		this.averagePrice = avgPrice;		
+	public void setTargetPrice(int avgPrice) {
+		this.targetPrice = avgPrice;		
 	}
 
 	public void setId(Long id) {
@@ -49,12 +49,12 @@ public class DressShop {
 	
 	@Override
 	public String toString() {
-		return "DressShop [id=" + id + ", name=" + name + ", averagePrice=" + averagePrice + "]";
+		return "DressShop [id=" + id + ", name=" + name + ", targetPrice=" + targetPrice + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, averagePrice);
+		return Objects.hash(id, name, targetPrice);
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class DressShop {
 		if (getClass() != obj.getClass())
 			return false;
 		DressShop other = (DressShop) obj;
-		if (averagePrice != other.averagePrice)
+		if (targetPrice != other.targetPrice)
 			return false;
 		if (id == null) {
 			if (other.id != null)

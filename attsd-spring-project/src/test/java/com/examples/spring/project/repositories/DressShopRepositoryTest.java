@@ -24,12 +24,12 @@ public class DressShopRepositoryTest {
 	private TestEntityManager entityManager;
 
 	@Test
-	public void test_findAllDressShopsWithSameAveragePrice() {
+	public void test_findAllDressShopsWithSameTargetPrice() {
 		DressShop dshop1 = entityManager.persistFlushFind(new DressShop(null, "Alcott", 20));
 	    entityManager.persistFlushFind(new DressShop(null, "Gucci", 55));
 		DressShop dshop3 = entityManager.persistFlushFind(new DressShop(null, "HM", 20));
 		entityManager.persistFlushFind(new DressShop(null, "Zara", 30));
-		List<DressShop> list = repository.findAllDressShopsWithTheSameAveragePrice(20);
+		List<DressShop> list = repository.findAllDressShopsWithTheSameTargetPrice(20);
 		assertThat(list).containsExactly(dshop1, dshop3);
 	}
 
