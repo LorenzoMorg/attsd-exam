@@ -14,7 +14,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.ModelAndViewAssert;
 import org.springframework.test.web.servlet.MockMvc;
@@ -41,25 +40,21 @@ public class DressShopWebControllerTest {
 	private DressShopService dressShopService;
 
 	@Test
-	@WithMockUser
 	public void test_getIndex() throws Exception {
 		mvc.perform(get("/")).andExpect(view().name("index")).andExpect(status().isOk());
 	}
 
 	@Test
-	@WithMockUser
 	public void test_status200() throws Exception {
 		mvc.perform(get("/")).andExpect(status().is2xxSuccessful());
 	}
 
 	@Test
-	@WithMockUser
 	public void test_returnHomeView() throws Exception {
 		ModelAndViewAssert.assertViewName(mvc.perform(get("/")).andReturn().getModelAndView(), "index");
 	}
 
 	@Test
-	@WithMockUser
 	public void test_emptyDressShopList() throws Exception {
 		mvc.perform(get("/")).andExpect(view().name("index"))
 				.andExpect(model().attribute("dressShops", new ArrayList<DressShop>()))
@@ -68,7 +63,6 @@ public class DressShopWebControllerTest {
 	}
 
 	@Test
-	@WithMockUser
 	public void test_notEmptyDressShopList() throws Exception {
 		List<DressShop> dressShops = Arrays.asList(new DressShop(Long.valueOf(1), "Colmar", 30));
 		when(dressShopService.getAllDressShops()).thenReturn(dressShops);
@@ -78,7 +72,6 @@ public class DressShopWebControllerTest {
 	}
 
 	@Test
-	@WithMockUser
 	public void test_singleDressShop() throws Exception {
 		DressShop ds = new DressShop(Long.valueOf(1), "Blumarine", 23);
 		when(dressShopService.getDressShopById(Long.valueOf(1))).thenReturn(ds);
@@ -89,7 +82,6 @@ public class DressShopWebControllerTest {
 	}
 
 	@Test
-	@WithMockUser
 	public void test_singleDressShopNotFound() throws Exception {
 		String id = "1";
 		mvc.perform(get("/edit?id="+id)).andExpect(view().name("error"));
@@ -97,7 +89,6 @@ public class DressShopWebControllerTest {
 	}
 
 	@Test
-	@WithMockUser
 	public void test_postDressShop() throws Exception {
 		DressShop ds = new DressShop(null, "Birkenstock", 45);
 		mvc.perform(post("/save").param("name", ds.getName())
@@ -107,7 +98,6 @@ public class DressShopWebControllerTest {
 	}
 
 	@Test
-	@WithMockUser
 	public void test_newDressShop() throws Exception {
 		mvc.perform(get("/new")).andExpect(view().name("edit"))
 				.andExpect(model().attribute("dressShop", new DressShop(null, null, 0)))
@@ -116,7 +106,6 @@ public class DressShopWebControllerTest {
 	}
 
 	@Test
-	@WithMockUser
 	public void test_deleteDressShopWhenNotExists() throws Exception {
 		DressShop ds = new DressShop();
 		String id = "1";
@@ -126,7 +115,6 @@ public class DressShopWebControllerTest {
 	}
 	
 	@Test
-	@WithMockUser
 	public void test_deleteDressShop() throws Exception {
 		DressShop ds = new DressShop(Long.valueOf(1), "Diadora", 30);
 		when(dressShopService.getDressShopById(Long.valueOf(1))).thenReturn(ds);
@@ -137,7 +125,6 @@ public class DressShopWebControllerTest {
 	}
 
 	@Test
-	@WithMockUser
 	public void test_resetDressShops() throws Exception {
 		mvc.perform(get("/reset")).andExpect(view().name("redirect:/"));
 		verify(dressShopService).deleteAll();
