@@ -1,10 +1,13 @@
 package com.examples.spring.project.e2e.steps;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.WebElement;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -75,6 +78,43 @@ public class DressShopE2ESteps {
 			throws Throwable {
 		assertThat(driver.findElement(By.id("dressShop_table")).getText())
 				.contains(name + " " + targetPrice + " Edit Delete");
+	}
+	
+	@When("^The User clicks to add a new dressShop$")
+	public void the_User_click_to_add_a_new_dressShop() throws Throwable {
+		driver.findElement(By.cssSelector("a[href*='/new")).click();
+	}
+
+	@When("^Enters a dressShop with name \"([^\"]*)\" and target price \"([^\"]*)\"$")
+	public void enters_a_dressShop_with_name_and_target_price(String name, String targetPrice) throws Throwable {
+		driver.findElement(By.name("name")).sendKeys(name);
+		driver.findElement(By.name("targetPrice")).sendKeys(targetPrice);
+		driver.findElement(By.name("btn_submit")).click();
+	}
+
+
+	@Then("^The buttons \"([^\"]*)\" and \"([^\"]*)\" are displayed$")
+	public void the_buttons_and_are_displayed(String buttonOne, String buttonTwo) throws Throwable {
+		WebElement editButton = driver.findElement(By.id("edit"));
+		assertEquals(buttonOne, editButton.getText());
+		WebElement deleteButton = driver.findElement(By.id("delete"));
+		assertEquals(buttonTwo, deleteButton.getText());
+		assertTrue(editButton.isDisplayed());
+		assertTrue(editButton.isEnabled());
+		assertTrue(deleteButton.isDisplayed());
+		assertTrue(deleteButton.isEnabled());
+	}
+
+	@When("^The User clicks to \"([^\"]*)\" the dressShop$")
+	public void the_User_clicks_to_edit_the_dressShop(String button) throws Throwable {
+		driver.findElement(By.id(button)).click();
+	}
+
+	@When("^updates the target price to \"([^\"]*)\"$")
+	public void updates_the_target_price_to(String aprice) throws Throwable {
+		driver.findElement(By.name("targetPrice")).clear();
+		driver.findElement(By.name("targetPrice")).sendKeys(aprice);
+		driver.findElement(By.name("btn_submit")).click();
 	}
 	
 
