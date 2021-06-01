@@ -4,10 +4,6 @@ matrix:
    include:
       - jdk: openjdk8
         env: ADDITIONAL_MAVEN_ARGS="-Pjacoco coveralls:report"
-      #only on PR
-      - jdk: openjdk9
-      - os: osx
-        osx_image: xcode10.1
 
 # skip installation step
 install: true
@@ -16,7 +12,7 @@ addons:
   sonarcloud:
     organization: "lorenzomorg-github"
     token:
-      secure: "mocFWXCUOMbpeYf8ITyXVYs35hv21nyY/9Yw7xYrvIxWi1Z6rug2ypX4wN2XEco5yABQDSOI+6Q2anyxnZR5KFEdw3XVom7FLux3Xq04yVwKQuvNHpFCagM24ZiWabNyorp+heXMHIJfewsH5qnDMiZYBPqvuLLcv6U+/cGbdPoNsZurt1nFGbsgqla4R2bQyFpMU2w0V+8RxdBKu/vV4EuyVEFqHmh8+aXmtVHq1ROQpg7whe6o15wV0rj1VAXgzX+GAJJqsUsa2MmnbyihXxlro292tUyqZqFwbv2SnElblDuKsKxrIix1sHRN+5Y6sN2r0c4VGXyRt3T8eqPvTr+O1M7nyrMIavnrx14KOiNFGDVxru1t0oxIAK4OvRlMBTA/NvUdNw+HopGvPmcAlBKEGjWlOJtS2hPB5fzEIyljz+6Ym1FDFFLVH28VEr8p5mjW3bcFv4kJG+qcSuFjSVgzZxmQFg1e++/ko3aKFF20WuXew9zGAgAhXjSfoJyzXXZxop7PapNLkgbKtL+n11EVYVUEsczrX98QwNff6HwgSELGHPTk1zsOkA8+iXmGTXfzfkj/QbJTazYTG7au13an4qPzx+UOh0jqNz88R3k6pZSEixE+gIAOzMapXUJqxOdukBvzjmU9Mr8MQN3rEismzdNFnem8zTP5pkFmu4k="
+      secure: "TUikI67GBaPovpEPOispsj32Dc7TlvpWvsDyvC8wmBZj+tneMSMhcGfUIPxEw+eK0qQQsQJa0qgOOSx3QqsJYlLe9a8vjmjHpJYypZFaG3HP7BBc4ZT5dOvdS18FnPqYqm19lt5nMMVT2vHw3spBSl4p/QSmmalXB3XJ+sT6wsEx21LUnMadEl37Hv7ZJtcZhYbpeInvLPe4oOFqGavUodwMHB17MEBPCvfo9KUhXSliL0GoVUJ3VmUmH9dKK0gUzjiBFRe+LXCaD+UNlRthGmrH6YPSWqbkiXxp4GTeHnsq8nebImz6iw5ytVK5s3hH9AlMx4gGHbUtF5nujY59GU94MtM8yjkk5ZMei9DakZgeKAkZ1vQRiim8qfpRgRS5/+GI1euG2AQlrGi+4vbN5tY8IXrfwwfug1lk7IVJ1G/2LsAc1Jcx+Qy72DMBEhBlZjon9+CiSjS8eJJ22AVSifkoJLn+2jLoWHVlmqFhrjxVcw70zA7Qx1zP198GSZEi0qyUvMllOf+cgoTEKKRAHYYeT4Hdwl4sWRBbL4Jwybp+WuUiOzjmUVMstYlidFdpiAHhAYiGK8NMqTogDwtYo0mFlippA8iVGkoNBcnbetbPALGPuIppgOxvXOJp8sThjk/PRtixuD/yfzPGf6b+v2ZoLeANas+mFJbOEjbPB5s="
 
 script: 
   - cd attsd-spring-project 
@@ -26,4 +22,5 @@ script:
 
 cache:
    directories:
-      - $HOME/.m2
+      - '$HOME/.m2'
+      - '$HOME/.sonar/cache'
