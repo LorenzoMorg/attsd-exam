@@ -1,9 +1,6 @@
 language: java
 
-matrix:
-   include:
-      - jdk: openjdk8
-        env: ADDITIONAL_MAVEN_ARGS="-Pjacoco coveralls:report"
+sudo: false
 
 # skip installation step
 install: true
@@ -12,11 +9,11 @@ addons:
   sonarcloud:
     organization: "lorenzomorg-github"
     token:
-      secure: "TUikI67GBaPovpEPOispsj32Dc7TlvpWvsDyvC8wmBZj+tneMSMhcGfUIPxEw+eK0qQQsQJa0qgOOSx3QqsJYlLe9a8vjmjHpJYypZFaG3HP7BBc4ZT5dOvdS18FnPqYqm19lt5nMMVT2vHw3spBSl4p/QSmmalXB3XJ+sT6wsEx21LUnMadEl37Hv7ZJtcZhYbpeInvLPe4oOFqGavUodwMHB17MEBPCvfo9KUhXSliL0GoVUJ3VmUmH9dKK0gUzjiBFRe+LXCaD+UNlRthGmrH6YPSWqbkiXxp4GTeHnsq8nebImz6iw5ytVK5s3hH9AlMx4gGHbUtF5nujY59GU94MtM8yjkk5ZMei9DakZgeKAkZ1vQRiim8qfpRgRS5/+GI1euG2AQlrGi+4vbN5tY8IXrfwwfug1lk7IVJ1G/2LsAc1Jcx+Qy72DMBEhBlZjon9+CiSjS8eJJ22AVSifkoJLn+2jLoWHVlmqFhrjxVcw70zA7Qx1zP198GSZEi0qyUvMllOf+cgoTEKKRAHYYeT4Hdwl4sWRBbL4Jwybp+WuUiOzjmUVMstYlidFdpiAHhAYiGK8NMqTogDwtYo0mFlippA8iVGkoNBcnbetbPALGPuIppgOxvXOJp8sThjk/PRtixuD/yfzPGf6b+v2ZoLeANas+mFJbOEjbPB5s="
-
+      secure: "awbFNhFCF1yWr2HziMmBIeZGzkV+XWFuyRCbRTONy6qU6Kjgj1CSGbgfnTWWNMZAMNsydLYx0T/99SCtVPT7T/n4yex1uSvYAsD8vAE/AmhmLxMX8rOy8ZZ/T9G/CGl8ukcu0qrhQ89MN50Gmx7qJ3+2XYEtHUqWW3fiv8m7lWoCa4T9QxMG73sXxp+66nMZZR5SBcJTW30pXx9IjTDlQdcG3+gZOhO8bfoaGAohKLx/cqLovrxYUzjK5YVFPCPbKgUV+JcixEs7lq52Ajqr76UOJ/PtvlJ2BnGOaAql3xuHN9frrZk1mLotouxKo06HZyO4+/z8MhFIhk8IH4cjizoVnZ1hdKDVWGNw/Mm9SVmRc+purAid5ZnPV+cuhkbObfo1DMEibSJWAdnj1v1kMnGSakWh86ZRRcc6bqGrqnazreJGx56S8jY9Bgg1xLMqbmR2UKt431iE/yU1Rw9h/GRO2INddnzaBQmohHS/wa1AelZLeokJiSMJTy03oL8mV33sDxqduAJ6ISXK8e5Anea/3nhW45QsP4++l9rLdrw1Z1FG0Yi2AAmRRwyykf1pPETPI0MSf3UdLLJduc5DheI0bSUfIvdl9yHGNgk6KN/HPn4GdRYTBHgob/Ho3BfRwlMNfUVRxZLqVKMEfrqRwJ4kZF9R7pHeLlUh6nPZJhc="
+    
 script: 
   - cd attsd-spring-project 
-  - mvn clean verify $ADDITIONAL_MAVEN_ARGS
+  - mvn clean verify -Pjacoco coveralls:report
     # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 
