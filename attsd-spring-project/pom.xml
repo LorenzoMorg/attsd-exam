@@ -13,10 +13,16 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>attsd-spring-project</name>
 	<description>ATTSD Spring Project</description>
+	
 	<properties>
 		<java.version>1.8</java.version>
 		<cucumber.version>4.4.0</cucumber.version>
+		<sonar.coverage.exclusions>
+	      **/*Application.*,
+	      **/model/*
+		</sonar.coverage.exclusions>
 	</properties>
+	
 	<dependencies>
 	
 		<dependency>
@@ -205,6 +211,11 @@
 					<artifactId>coveralls-maven-plugin</artifactId>
 					<version>4.3.0</version>
 				</plugin>
+				<plugin>
+		          <groupId>org.sonarsource.scanner.maven</groupId>
+		          <artifactId>sonar-maven-plugin</artifactId>
+		          <version>3.8.0.2131</version>
+		        </plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
