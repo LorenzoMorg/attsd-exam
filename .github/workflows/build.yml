@@ -31,7 +31,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build with Maven and SonarCloud
         run: >
-            xvfb-run mvn verify -Pjacoco sonar:sonar coveralls:report
+            xvfb-run mvn verify -Pjacoco sonar:sonar
             -Dsonar.organization=lorenzomorg-github
             -Dsonar.host.url=https://sonarcloud.io
         working-directory: attsd-spring-project
