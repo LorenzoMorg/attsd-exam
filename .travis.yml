@@ -1,9 +1,6 @@
 language: java
 
-matrix:
-   include:
-      - jdk: openjdk11
-        env: ADDITIONAL_MAVEN_ARGS="-Pjacoco coveralls:report"
+sudo: false
 
 # skip installation step
 install: true
@@ -16,7 +13,7 @@ addons:
     
 script: 
   - cd attsd-spring-project 
-  - mvn clean verify $ADDITIONAL_MAVEN_ARGS
+  - mvn clean verify -Pjacoco coveralls:report
     # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 
