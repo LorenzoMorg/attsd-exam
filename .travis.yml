@@ -1,14 +1,21 @@
 language: java
 
-sudo: false
+matrix:
+   include:
+      - jdk: openjdk8
+        env: ADDITIONAL_MAVEN_ARGS="-Pjacoco coveralls:report"
+      #only on PR
+      - jdk: openjdk9
+      - os: osx
+        osx_image: xcode10.1
 
 # skip installation step
 install: true
-    
+
 script: 
   - cd attsd-spring-project 
-  - mvn clean verify -Pjacoco coveralls:report
+  - mvn clean verify $ADDITIONAL_MAVEN_ARGS
 
 cache:
    directories:
-      - '$HOME/.m2'
+      - $HOME/.m2
