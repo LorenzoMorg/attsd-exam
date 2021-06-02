@@ -21,6 +21,7 @@
 			 **/*Application.*,
 			 **/model/*
 		</sonar.coverage.exclusions>
+	  <sonar.projectKey>LorenzoMorg_attsd-exam</sonar.projectKey>
 	</properties>
 	
 	<dependencies>
