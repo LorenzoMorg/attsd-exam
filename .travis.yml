@@ -11,7 +11,7 @@ install: true
 script: 
   - cd attsd-spring-project 
   - mvn clean verify -Pjacoco coveralls:report
-  - mvn verify -PitItest
+  - mvn verify -PitTest
   - mvn verify -Pe2e
 
 
