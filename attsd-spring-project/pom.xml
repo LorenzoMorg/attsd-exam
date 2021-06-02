@@ -259,12 +259,13 @@
 		</profile>	
 		<profile>
 			<id>e2e</id>
-			<properties>
-				<skip.unit-tests>true</skip.unit-tests>
-			</properties>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
+			<properties>
+				<skip.unit-tests>true</skip.unit-tests>
+				<skip.integration-tests>true</skip.integration-tests>
+			</properties>
 			<build>
 				<plugins>
 					<plugin>

@@ -14,7 +14,6 @@ script:
   - mvn verify -PitTest
   - mvn verify -Pe2e
 
-
 cache:
    directories:
       - $HOME/.m2
