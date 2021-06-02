@@ -172,25 +172,6 @@
 			    </includes>
 			  </configuration>
 			</plugin>
-			<plugin>
-			  <groupId>org.apache.maven.plugins</groupId>
-			  <artifactId>maven-failsafe-plugin</artifactId>
-			  <executions>
-			    <execution>
-			      <configuration>
-			      	<skipTests>${skip.integration-tests}</skipTests>
-			        <includes>
-			          <include>**/*ApplicationTests.java</include>
-			          <include>**/*IT.java</include>
-			        </includes>
-			      </configuration>
-			      <goals>
-			        <goal>integration-test</goal>
-			        <goal>verify</goal>
-			      </goals>
-			    </execution>
-			  </executions>
-			</plugin>
 		</plugins>	
 		<pluginManagement>
 			<plugins>
@@ -295,6 +276,43 @@
 				</plugins>
 			</build>
 	    </profile>
+	    <profile>
+			<id>itTest</id>
+			<properties>
+				<skip.unit-tests>true</skip.unit-tests>
+			</properties>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<configuration>
+							<excludes>
+								<exclude>src/e2e/java</exclude>
+							</excludes>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>integration-test</goal>
+									<goal>verify</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<!-- configured in pluginManagement -->
+						<groupId>io.fabric8</groupId>
+						<artifactId>docker-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
+	
 
 </project>
