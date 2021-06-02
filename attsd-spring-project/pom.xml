@@ -259,32 +259,33 @@
 		</profile>	
 		<profile>
 			<id>e2e</id>
+			<properties>
+				<skip.unit-tests>true</skip.unit-tests>
+			</properties>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
-			<properties>
-				<skip.unit-tests>true</skip.unit-tests>
-				<skip.integration-tests>true</skip.integration-tests>
-			</properties>
 			<build>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
 						<executions>
-							<execution>
-								<id>e2e-tests</id>
-								<configuration>
-									<skipITs>false</skipITs>
-									<includes>
-										<include>**/*E2E.java</include>
-									</includes>
-								</configuration>
-								<goals>
-									<goal>integration-test</goal>
-									<goal>verify</goal>
-								</goals>
-							</execution>
+				          <execution>
+				            <id>e2e-tests</id>
+				            <goals>
+				              <goal>integration-test</goal>
+				              <goal>verify</goal>
+				            </goals>
+				            <configuration>
+				              <excludes>
+				                <exclude>**/*IT.java</exclude>
+				              </excludes>
+				              <includes>
+				                <include>**/*E2E.java</include>
+				              </includes>
+				            </configuration>
+				          </execution>
 						</executions>
 					</plugin>
 					<plugin>
