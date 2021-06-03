@@ -172,6 +172,7 @@
 						<resources>
 							<resource>
 								<directory>src/e2e/resources</directory>
+								<directory>src/test/resources</directory>
 							</resource>
 						</resources>
 					</configuration>
