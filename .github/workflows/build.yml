@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - pom_profiles
+      - master
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
