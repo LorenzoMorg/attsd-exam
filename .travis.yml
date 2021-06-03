@@ -19,7 +19,7 @@ script:
   - cd attsd-spring-project 
   - mvn clean verify -Pjacoco coveralls:report
   - mvn verify -PitTest
-  - mvn verify -Pe2e > /dev/null
+  - mvn verify -Pe2e 
 
 cache:
    directories:
