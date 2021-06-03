@@ -4,7 +4,6 @@ jdk: openjdk8
         
 services:
   - docker
-  - xvfb  
 
 # skip installation step
 install: true
@@ -20,10 +19,7 @@ script:
   - cd attsd-spring-project 
   - mvn clean verify -Pjacoco coveralls:report
   - mvn verify -PitTest
-  - mvn verify -Pe2e
-
-before_script:
-  - export DISPLAY=:99.0
+  - mvn verify -Pe2e > /dev/null
 
 cache:
    directories:
