@@ -46,7 +46,8 @@ public class DressShopServiceIT {
 	public void test_serviceUpdateIntoRepository() {
 		DressShop ds = repository.save(new DressShop(Long.valueOf(1), "Lacoste", 18));
 		DressShop ds2 = service.saveIntoDb(new DressShop(ds.getId(), "Colmar", 30));
-		assertThat(repository.findById(ds.getId()).get()).isEqualTo(ds2);
+		
+		assertThat(repository.findById(ds.getId())).contains(ds2);
 	}
 	
 	@Test
