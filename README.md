@@ -4,7 +4,17 @@ Author: Lorenzo Morganti
 
 This project consists of a web-app for managing a dress shop repository
 
+
+Build with Travis:
+
+[![Build Status](https://travis-ci.com/LorenzoMorg/attsd-exam.svg?branch=master)](https://travis-ci.com/LorenzoMorg/attsd-exam)
+
+Code coverage with Coveralls:
+
+[![Coverage Status](https://coveralls.io/repos/github/LorenzoMorg/attsd-exam/badge.svg)](https://coveralls.io/github/LorenzoMorg/attsd-exam)
+
 Code quality with Sonarcloud: 
+
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=LorenzoMorg_attsd-exam&metric=alert_status)](https://sonarcloud.io/dashboard?id=LorenzoMorg_attsd-exam)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=LorenzoMorg_attsd-exam&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=LorenzoMorg_attsd-exam)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=LorenzoMorg_attsd-exam&metric=bugs)](https://sonarcloud.io/dashboard?id=LorenzoMorg_attsd-exam)
