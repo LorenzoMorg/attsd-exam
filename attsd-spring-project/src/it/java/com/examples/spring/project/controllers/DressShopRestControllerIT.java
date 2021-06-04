@@ -87,7 +87,7 @@ public class DressShopRestControllerIT {
 		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(updated).when()
 				.put(url + "/api/dressShops/update/" + ds.getId()).then().statusCode(200);
 		
-		assertThat(dressShopRepository.findAll().toString()).hasToString("[DressShop [id=" + ds.getId() + ", name=Adidas, targetPrice=28]]");
+		assertThat(dressShopRepository.findAll()).hasToString("[DressShop [id=" + ds.getId() + ", name=Adidas, targetPrice=28]]");
 
 	}
 
@@ -98,7 +98,7 @@ public class DressShopRestControllerIT {
 		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(updated).when()
 				.put(url + "/api/dressShops/update/" + ds.getId()).then().statusCode(200);
 		
-		assertThat(dressShopRepository.findAll().toString()).hasToString("[DressShop [id=" + ds.getId() + ", name=GEOX, targetPrice=19]]");
+		assertThat(dressShopRepository.findAll()).hasToString("[DressShop [id=" + ds.getId() + ", name=GEOX, targetPrice=19]]");
 
 	}
 
@@ -109,6 +109,6 @@ public class DressShopRestControllerIT {
 		given().when().delete(url + "/api/dressShops/delete/" + ds.getId()).then().statusCode(200);
 		assertFalse(dressShopRepository.findById(Long.valueOf(1)).isPresent());
 		
-		assertThat(dressShopRepository.findAll().toString()).hasToString("[DressShop [id=" + newds.getId() + ", name="+ newds.getName()+ ", targetPrice="+ newds.getTargetPrice()+"]]");
+		assertThat(dressShopRepository.findAll()).hasToString("[DressShop [id=" + newds.getId() + ", name="+ newds.getName()+ ", targetPrice="+ newds.getTargetPrice()+"]]");
 	}
 }
