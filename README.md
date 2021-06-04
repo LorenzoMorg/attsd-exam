@@ -2,8 +2,7 @@
 
 Author: Lorenzo Morganti
 
-This project consists of a web-app for managing a dress shop repository
-
+This project realizes a web-app for managing a dress shops repository
 
 Build with Travis:
 
