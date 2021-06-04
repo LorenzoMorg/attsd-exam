@@ -1,11 +1,9 @@
-name: Build
+name: Build with Maven, Docker and SonarCloud
+
 on:
   push:
-    branches:
-      - pom_profiles
-      - master
   pull_request:
-    types: [opened, synchronize, reopened]
+
 jobs:
   build:
     name: Build
