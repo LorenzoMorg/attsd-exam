@@ -21,6 +21,7 @@ import org.springframework.http.MediaType;
 
 
 import com.examples.spring.project.model.DressShop;
+import com.examples.spring.project.model.DressShopDTO;
 import com.examples.spring.project.services.DressShopService;
 
 public class DressShopControllerRestAssuredTest {
@@ -62,9 +63,13 @@ public class DressShopControllerRestAssuredTest {
 	@Test
 	public void test_newDressShop() throws Exception {
 		
-		DressShop ds = new DressShop(null, "Adidas", 20);
+		DressShopDTO dsDTO = new DressShopDTO(null, "Adidas", 20);
+		DressShop ds = new DressShop();
+		ds.setId(dsDTO.getId());
+		ds.setName(dsDTO.getName());
+		ds.setTargetPrice(dsDTO.getTargetPrice());
 
-		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(ds).when().post("/api/dressShops/new").then()
+		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(dsDTO).when().post("/api/dressShops/new").then()
 				.statusCode(200);
 		ArgumentCaptor<DressShop> captor = ArgumentCaptor.forClass(DressShop.class);
 		verify(dressShopService, times(1)).saveIntoDb(captor.capture());

@@ -13,10 +13,35 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>attsd-spring-project</name>
 	<description>ATTSD Spring Project</description>
+	
 	<properties>
 		<java.version>1.8</java.version>
 		<cucumber.version>4.4.0</cucumber.version>
+		<sonar.coverage.exclusions>
+			 **/AttsdSpringProjectApplication.java,
+			 **/model/**
+		</sonar.coverage.exclusions>
+		<sonar.sources>
+		  pom.xml,
+	   	  ${project.build.sourceDirectory},
+		</sonar.sources>
+	    
+		<sonar.issue.ignore.multicriteria>e11</sonar.issue.ignore.multicriteria>
+	    <!-- "Tests should include assertions" disabled on some classes like 
+	      *ApplicationTests which just checks that the Spring application can start, 
+	      without any assertion -->
+	    <sonar.issue.ignore.multicriteria.e11.ruleKey>
+	      java:S2699
+	    </sonar.issue.ignore.multicriteria.e11.ruleKey>
+	    <sonar.issue.ignore.multicriteria.e11.resourceKey>
+	      **/*ApplicationTests.java
+	    </sonar.issue.ignore.multicriteria.e11.resourceKey>
+	    
+	    <sonar.projectKey>LorenzoMorg_attsd-exam</sonar.projectKey>
+	    <skip.unit-tests>false</skip.unit-tests>
+	    <skip.integration-tests>false</skip.integration-tests>
 	</properties>
+	
 	<dependencies>
 	
 		<dependency>
@@ -107,6 +132,11 @@
 	      <scope>test</scope>
 	    </dependency>
 	    
+	    <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
+	    
 	</dependencies>
 
 	<build>
@@ -142,6 +172,7 @@
 						<resources>
 							<resource>
 								<directory>src/e2e/resources</directory>
+								<directory>src/test/resources</directory>
 							</resource>
 						</resources>
 					</configuration>
@@ -152,30 +183,174 @@
 			  <groupId>org.apache.maven.plugins</groupId>
 			  <artifactId>maven-surefire-plugin</artifactId>
 			  <configuration>
+			  	<skipTests>${skip.unit-tests}</skipTests>
 			    <includes>
 			      <include>**/*Test.java</include>
 			    </includes>
 			  </configuration>
 			</plugin>
-			<plugin>
-			  <groupId>org.apache.maven.plugins</groupId>
-			  <artifactId>maven-failsafe-plugin</artifactId>
-			  <executions>
-			    <execution>
-			      <configuration>
-			        <includes>
-			          <include>**/*ApplicationTests.java</include>
-			          <include>**/*IT.java</include>
-			        </includes>
-			      </configuration>
-			      <goals>
-			        <goal>integration-test</goal>
-			        <goal>verify</goal>
-			      </goals>
-			    </execution>
-			  </executions>
-			</plugin>
-		</plugins>
+		</plugins>	
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>0.8.2</version>
+					<configuration>
+						<excludes>
+							<exclude>**/model/**</exclude>
+							<exclude>**/AttsdSpringProjectApplication.*</exclude>
+						</excludes>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+							<!-- binds by default to the phase "initialize" -->
+							<goal>prepare-agent</goal>
+							<!-- binds by default to the phase "verify" -->
+							<goal>report</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.eluder.coveralls</groupId>
+					<artifactId>coveralls-maven-plugin</artifactId>
+					<version>4.3.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.sonarsource.scanner.maven</groupId>
+					<artifactId>sonar-maven-plugin</artifactId>
+					<version>3.6.0.1398</version>
+				</plugin>
+				<plugin>
+					<groupId>io.fabric8</groupId>
+					<artifactId>docker-maven-plugin</artifactId>
+					<version>0.30.0</version>
+					<configuration>
+						<images>
+							<image>
+								<name>mongo</name>
+								<run>
+									<ports>
+										<port>27017:27017</port>
+									</ports>
+								</run>
+							</image>
+						</images>
+						<showLogs>true</showLogs>
+					</configuration>
+					<executions>
+						<execution>
+							<id>docker:start</id>
+							<phase>pre-integration-test</phase>
+							<goals>
+								<goal>start</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>docker:stop</id>
+							<phase>post-integration-test</phase>
+							<goals>
+								<goal>stop</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
+	
+	<profiles>
+		<profile>
+			<id>jacoco</id>
+				<build>
+					<plugins>
+						<plugin>
+						<!-- configured in pluginManagement -->
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						</plugin>
+					</plugins>
+				</build>
+		</profile>	
+		<profile>
+			<id>e2e</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<skip.unit-tests>true</skip.unit-tests>
+				<skip.integration-tests>true</skip.integration-tests>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<executions>
+				          <execution>
+				            <id>e2e-tests</id>
+				            <goals>
+				              <goal>integration-test</goal>
+				              <goal>verify</goal>
+				            </goals>
+				            <configuration>
+				              <excludes>
+				                <exclude>**/*IT.java</exclude>
+				              </excludes>
+				              <includes>
+				                <include>**/*E2E.java</include>
+				              </includes>
+				            </configuration>
+				          </execution>
+						</executions>
+					</plugin>
+					<plugin>
+					<!-- configured in pluginManagement -->
+					<groupId>io.fabric8</groupId>
+					<artifactId>docker-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+	    </profile>
+	    <profile>
+			<id>itTest</id>
+			<properties>
+				<skip.unit-tests>true</skip.unit-tests>
+			</properties>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<configuration>
+							<excludes>
+								<exclude>src/e2e/java</exclude>
+							</excludes>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>integration-test</goal>
+									<goal>verify</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<!-- configured in pluginManagement -->
+						<groupId>io.fabric8</groupId>
+						<artifactId>docker-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	
 
 </project>

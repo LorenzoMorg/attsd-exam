@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.examples.spring.project.model.DressShop;
+import com.examples.spring.project.model.DressShopDTO;
 import com.examples.spring.project.services.DressShopService;
 
 @Controller
@@ -49,7 +50,12 @@ public class DressShopWebController {
 	}
 
 	@PostMapping("/save")
-	public String saveDressShop(DressShop ds) {
+	public String saveDressShop(DressShopDTO dsDTO, String name, int targetPrice) {
+		DressShop ds = new DressShop();
+		ds.setId(dsDTO.getId());
+		ds.setName(name);
+		ds.setTargetPrice(targetPrice);
+		
 		dressShopService.saveIntoDb(ds);
 		return REDIRECT;
 	}

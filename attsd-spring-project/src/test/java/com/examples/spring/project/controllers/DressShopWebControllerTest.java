@@ -26,6 +26,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.examples.spring.project.model.DressShop;
+import com.examples.spring.project.model.DressShopDTO;
 import com.examples.spring.project.services.DressShopService;
 
 @RunWith(SpringRunner.class)
@@ -90,10 +91,13 @@ public class DressShopWebControllerTest {
 
 	@Test
 	public void test_postDressShop() throws Exception {
-		DressShop ds = new DressShop(null, "Birkenstock", 45);
-		mvc.perform(post("/save").param("name", ds.getName())
-				.param("targetPrice", "" + ds.getTargetPrice())).andExpect(view().name("redirect:/"));
-
+		DressShopDTO dsDTO = new DressShopDTO(null, "Birkenstock", 45);
+		mvc.perform(post("/save").param("name", dsDTO.getName())
+				.param("targetPrice", "" + dsDTO.getTargetPrice())).andExpect(view().name("redirect:/"));
+		DressShop ds = new DressShop();
+		ds.setId(dsDTO.getId());
+		ds.setName(dsDTO.getName());
+		ds.setTargetPrice(dsDTO.getTargetPrice());
 		verify(dressShopService, times(1)).saveIntoDb(ds);
 	}
 

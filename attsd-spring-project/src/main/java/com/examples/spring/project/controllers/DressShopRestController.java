@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.examples.spring.project.model.DressShop;
+import com.examples.spring.project.model.DressShopDTO;
 import com.examples.spring.project.services.DressShopService;
 
 @RestController
@@ -37,12 +38,19 @@ public class DressShopRestController {
 	}
 
 	@PostMapping("/dressShops/new")
-	public DressShop newDressShop(@RequestBody DressShop ds) {		
+	public DressShop newDressShop(@RequestBody DressShopDTO dsDTO) {		
+		DressShop ds = new DressShop();
+		ds.setId(dsDTO.getId());
+		ds.setName(dsDTO.getName());
+		ds.setTargetPrice(dsDTO.getTargetPrice());	
 		return dressShopService.saveIntoDb(ds);
 	}
 
 	@PutMapping("/dressShops/update/{id}")
-	public DressShop updateDressShop(@PathVariable long id, @RequestBody DressShop ds) {
+	public DressShop updateDressShop(@PathVariable long id, @RequestBody DressShopDTO dsDTO) {
+		DressShop ds = new DressShop();
+		ds.setName(dsDTO.getName());
+		ds.setTargetPrice(dsDTO.getTargetPrice());	
 		ds.setId(id);
 		return dressShopService.saveIntoDb(ds);
 	}
