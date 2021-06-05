@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <title>DressShops</title>
+<link rel="stylesheet" href="index.css" TYPE="text/css" media="screen">
 </head>
 
 <body>
 	<h1>DressShops</h1>
 	<div th:if="${dressShops.empty}">
-		<div>No dressShops</div>
+		<p>No dressShops</p>
 	</div>
 	<div th:unless="${dressShops.empty}">
 		<table id="dressShop_table">
@@ -37,6 +38,10 @@
 		<p>
 			Click <a th:href="@{/reset}">here</a> to delete all the dressShops
 		</p>
+	</div>
+	
+	<div class="imageStyle">
+		<img src="image.jpg" >
 	</div>
 
 </body>
