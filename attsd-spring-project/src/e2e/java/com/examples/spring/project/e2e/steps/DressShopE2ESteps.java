@@ -106,7 +106,7 @@ public class DressShopE2ESteps {
 	}
 
 	@When("^The User clicks to \"([^\"]*)\" the dressShop$")
-	public void the_User_clicks_to_edit_the_dressShop(String button) throws Throwable {
+	public void the_User_clicks_to_edit_or_delete_the_dressShop(String button) throws Throwable {
 		driver.findElement(By.id(button)).click();
 	}
 
@@ -115,6 +115,11 @@ public class DressShopE2ESteps {
 		driver.findElement(By.name("targetPrice")).clear();
 		driver.findElement(By.name("targetPrice")).sendKeys(aprice);
 		driver.findElement(By.name("btn_submit")).click();
+	}
+	
+	@When("^The User tries to \"([^\"]*)\" a not existing dressShop$")
+	public void the_User_tries_to_edit_or_delete_a_not_existing_dressShop(String name) throws Throwable {
+		driver.get(baseUrl + port+"/" + name + "?id=1");
 	}
 	
 

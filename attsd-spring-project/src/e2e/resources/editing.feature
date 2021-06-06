@@ -18,3 +18,14 @@ Feature: DressShop editing
 	And The buttons "Edit" and "Delete" are displayed
 	When The User clicks to "delete" the dressShop
 	Then The message "No dressShops" must be shown
+	
+	Scenario: Edit error
+	Given The User is on HomePage
+	When The User tries to "edit" a not existing dressShop
+	Then The message "Error" must be shown
+	
+	Scenario: Delete error
+	Given The User is on HomePage
+	When The User tries to "delete" a not existing dressShop
+	Then The message "Error" must be shown
+
