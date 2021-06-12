@@ -20,7 +20,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.ModelAndViewAssert;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,7 +31,7 @@ import com.examples.spring.project.model.DressShop;
 import com.examples.spring.project.repositories.DressShopRepository;
 
 @RunWith(SpringRunner.class)
-
+@ActiveProfiles("mysql")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class DressShopWebControllerIT {
 
@@ -83,7 +83,7 @@ public class DressShopWebControllerIT {
 
 	@Test
 	public void test_twoDressShops() throws Exception {
-		List<DressShop> dressShops = Arrays.asList(new DressShop(null, "Colt", 22), new DressShop(null, "Lacoste", 18));
+		List<DressShop> dressShops = Arrays.asList(new DressShop(null, "Colt", 22L), new DressShop(null, "Lacoste", 18L));
 		repository.saveAll(dressShops);
 		mvc.perform(get("/")).andExpect(view().name("index")).andExpect(model().attribute("dressShops", dressShops))
 				.andExpect(model().attribute("message", ""));
@@ -92,7 +92,7 @@ public class DressShopWebControllerIT {
 
 	@Test
 	public void test_singleDressShop() throws Exception {
-		DressShop dressShop = new DressShop(null, "Blumarine", 23);
+		DressShop dressShop = new DressShop(null, "Blumarine", 23L);
 		repository.save(dressShop);
 		mvc.perform(get("/edit?id="+dressShop.getId())).andExpect(view().name("edit"))
 				.andExpect(model().attribute("dressShop", dressShop)).andExpect(model().attribute("message", "Edit dress shop"));
@@ -109,7 +109,7 @@ public class DressShopWebControllerIT {
 
 	@Test
 	public void test_postDressShop() throws Exception {
-		DressShop dressShop = new DressShop(Long.valueOf(1), "Birkenstock", 45);
+		DressShop dressShop = new DressShop(Long.valueOf(1), "Birkenstock", 45L);
 		
 		mvc.perform(post("/save")
 				.param("id", "" + dressShop.getId())
@@ -124,13 +124,13 @@ public class DressShopWebControllerIT {
 	@Test
 	public void test_newDressShop() throws Exception {
 		mvc.perform(get("/new")).andExpect(view().name("edit"))
-				.andExpect(model().attribute("dressShop", new DressShop(null, null, 0)))
+				.andExpect(model().attribute("dressShop", new DressShop()))
 				.andExpect(model().attribute("message", ""));
 	}
 
 	@Test
 	public void test_deleteDressShop() throws Exception {
-		DressShop dressShop = new DressShop(null, "Birkenstock", 45);
+		DressShop dressShop = new DressShop(null, "Birkenstock", 45L);
 		repository.save(dressShop);
 		mvc.perform(get("/delete?id="+dressShop.getId())).andExpect(view().name("redirect:/"));
 		assertEquals(0, repository.count());
@@ -138,9 +138,9 @@ public class DressShopWebControllerIT {
 	
 	@Test
 	public void test_resetDressShops() throws Exception {
-		DressShop dressShop = new DressShop(Long.valueOf(1), "Birkenstock", 45);
+		DressShop dressShop = new DressShop(Long.valueOf(1), "Birkenstock", 45L);
 		repository.save(dressShop);
-		DressShop dressShop2 = new DressShop(Long.valueOf(2), "Diadora", 30);
+		DressShop dressShop2 = new DressShop(Long.valueOf(2), "Diadora", 30L);
 		repository.save(dressShop2);
 		assertEquals(2, repository.count());
 		mvc.perform(get("/reset")).andExpect(view().name("redirect:/"));
