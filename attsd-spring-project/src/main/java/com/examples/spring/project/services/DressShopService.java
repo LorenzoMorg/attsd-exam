@@ -16,7 +16,7 @@ public class DressShopService {
 		return dressShopRepository.findAll();
 	}
 
-	public DressShop getDressShopById(long id) {
+	public DressShop getDressShopById(Long id) {
 		return dressShopRepository.findById(id).orElse(null);
 	}
 
