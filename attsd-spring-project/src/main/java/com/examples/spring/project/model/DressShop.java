@@ -1,23 +1,25 @@
 package com.examples.spring.project.model;
 
-import java.util.Objects;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name ="DS_DATABASE")
 public class DressShop {
 	
-	@Id @GeneratedValue
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	private int targetPrice;
+	private Long targetPrice;
 	
 	public DressShop() {
 	}
 
-	public DressShop(Long id, String name, int targetPrice) {
+	public DressShop(Long id, String name, Long targetPrice) {
 		this.id = id;
 		this.name = name;
 		this.targetPrice = targetPrice;
@@ -31,7 +33,7 @@ public class DressShop {
 		return name;
 	}
 
-	public int getTargetPrice() {
+	public Long getTargetPrice() {
 		return targetPrice;
 	}
 	
@@ -39,8 +41,8 @@ public class DressShop {
 		this.name = name;
 	}
 
-	public void setTargetPrice(int avgPrice) {
-		this.targetPrice = avgPrice;		
+	public void setTargetPrice(Long targetPrice2) {
+		this.targetPrice = targetPrice2;		
 	}
 
 	public void setId(Long id) {
@@ -54,7 +56,12 @@ public class DressShop {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, targetPrice);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((targetPrice == null) ? 0 : targetPrice.hashCode());
+		return result;
 	}
 
 	@Override
