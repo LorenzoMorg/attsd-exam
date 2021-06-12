@@ -4,9 +4,9 @@ public class DressShopDTO {
 	
 	private Long id;
 	private String name;
-	private int targetPrice;
+	private Long targetPrice;
 
-	public DressShopDTO(Long id, String name, int targetPrice) {
+	public DressShopDTO(Long id, String name, Long targetPrice) {
 		this.id = id;
 		this.name = name;
 		this.targetPrice = targetPrice;
@@ -23,7 +23,7 @@ public class DressShopDTO {
 		return name;
 	}
 
-	public int getTargetPrice() {
+	public Long getTargetPrice() {
 		return targetPrice;
 	}
 	
