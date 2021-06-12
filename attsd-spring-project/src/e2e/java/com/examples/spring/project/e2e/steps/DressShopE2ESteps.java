@@ -69,8 +69,8 @@ public class DressShopE2ESteps {
 	
 	@Given("^Some dressShops are in the database$")
 	public void someDressShopsAreInTheDatabase() throws Throwable {
-	dressShopRepository.save(new DressShop(1L, "ds1", 20));
-	dressShopRepository.save(new DressShop(1L, "ds2", 30));
+	dressShopRepository.save(new DressShop(1L, "ds1", 20L));
+	dressShopRepository.save(new DressShop(1L, "ds2", 30L));
 	}
 	
 	@Then("^The table must show the dressShop with name \"([^\"]*)\" and target price \"([^\"]*)\"$")
