@@ -12,7 +12,7 @@ public interface DressShopRepository extends JpaRepository<DressShop, Long> {
 
 
 	@Query("Select ds from DressShop ds where ds.targetPrice = :n")
-	List<DressShop> findAllDressShopsWithTheSameTargetPrice(@Param("n") int n);
+	List<DressShop> findAllDressShopsWithTheSameTargetPrice(@Param("n") Long n);
 	
 
 	@Query("Select ds from DressShop ds order by name")
