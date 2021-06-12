@@ -15,7 +15,6 @@ import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
-
 import org.mockito.ArgumentCaptor;
 import org.springframework.http.MediaType;
 
@@ -24,8 +23,10 @@ import com.examples.spring.project.model.DressShop;
 import com.examples.spring.project.model.DressShopDTO;
 import com.examples.spring.project.services.DressShopService;
 
+
 public class DressShopControllerRestAssuredTest {
 	
+
 	private DressShopService dressShopService;
 
 	@Before
@@ -37,8 +38,8 @@ public class DressShopControllerRestAssuredTest {
 	@Test
 	public void test_allDressShops() throws Exception {
 		when(dressShopService.getAllDressShops())
-				.thenReturn(Arrays.asList(new DressShop(Long.valueOf(1), "GAP", 15),
-						new DressShop(Long.valueOf(2), "Colt", 22)));
+				.thenReturn(Arrays.asList(new DressShop(1L, "GAP", 15L),
+						new DressShop(2L, "Colt", 22L)));
 		given().when().get("/api/dressShops").then().statusCode(200).assertThat().body("id[0]", equalTo(1), "name[0]",
 				equalTo("GAP"), "targetPrice[0]", equalTo(15), "id[1]", equalTo(2), "name[1]", equalTo("Colt"),
 				"targetPrice[1]", equalTo(22));
@@ -48,7 +49,7 @@ public class DressShopControllerRestAssuredTest {
 	@Test
 	public void test_findByIdWithExistingDressShop() throws Exception {
 		when(dressShopService.getDressShopById(Long.valueOf(1)))
-				.thenReturn(new DressShop(Long.valueOf(1), "Diesel", 30));
+				.thenReturn(new DressShop(1L, "Diesel", 30L));
 		given().when().get("/api/dressShops/1").then().statusCode(200).assertThat().body("id", equalTo(1), "name",
 				equalTo("Diesel"), "targetPrice", equalTo(30));
 		verify(dressShopService, times(1)).getDressShopById(Long.valueOf(1));
@@ -63,7 +64,7 @@ public class DressShopControllerRestAssuredTest {
 	@Test
 	public void test_newDressShop() throws Exception {
 		
-		DressShopDTO dsDTO = new DressShopDTO(null, "Adidas", 20);
+		DressShopDTO dsDTO = new DressShopDTO(null, "Adidas", 20L);
 		DressShop ds = new DressShop();
 		ds.setId(dsDTO.getId());
 		ds.setName(dsDTO.getName());
@@ -82,8 +83,8 @@ public class DressShopControllerRestAssuredTest {
 	@Test
 	public void test_updateDressShop() throws Exception {  
 		when(dressShopService.getDressShopById(Long.valueOf(1)))
-				.thenReturn(new DressShop(Long.valueOf(1), "Nike", 20));
-		DressShop updated = new DressShop(Long.valueOf(1), "Puma", 21);
+				.thenReturn(new DressShop(1L, "Nike", 20L));
+		DressShop updated = new DressShop(1L, "Puma", 21L);
 		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(updated).when().put("/api/dressShops/update/1")
 				.then().statusCode(200);
 		verify(dressShopService, times(1)).saveIntoDb(updated);
@@ -91,7 +92,7 @@ public class DressShopControllerRestAssuredTest {
 
 	@Test
 	public void test_updateDressShopWithFakeId() throws Exception {
-		DressShop updated = new DressShop(Long.valueOf(1), "Gutteridge", 35);
+		DressShop updated = new DressShop(1L, "Gutteridge", 35L);
 		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(updated).when().put("/api/dressShops/update/1")
 				.then().statusCode(200);
 		verify(dressShopService, times(1)).saveIntoDb(updated);
@@ -100,7 +101,7 @@ public class DressShopControllerRestAssuredTest {
 
 	@Test
 	public void test_deleteDressShop() throws Exception {
-		DressShop ds = new DressShop(Long.valueOf(1), "Diesel", 30);
+		DressShop ds = new DressShop(1L, "Diesel", 30L);
 		when(dressShopService.getDressShopById(Long.valueOf(1)))
 		.thenReturn(ds);
 		given().when().delete("/api/dressShops/delete/1").then().statusCode(200);
