@@ -24,7 +24,7 @@ import com.examples.spring.project.model.DressShopDTO;
 import com.examples.spring.project.services.DressShopService;
 
 
-public class DressShopControllerRestAssuredTest {
+public class DressShopRestControllerRestAssuredTest {
 	
 
 	private DressShopService dressShopService;
