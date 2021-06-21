@@ -152,6 +152,20 @@
               </sources>
             </configuration>
           </execution>
+	      <execution>
+				<id>add-test-resource</id>
+				<phase>generate-resources</phase>
+				<goals>
+					<goal>add-test-resource</goal>
+				</goals>
+				<configuration>
+					<resources>
+						<resource>
+							<directory>src/e2e/resources</directory>
+						</resource>
+					</resources>
+				</configuration>
+			</execution>
         </executions>
       </plugin>
 
