@@ -22,4 +22,7 @@ Code quality with Sonarcloud:
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=LorenzoMorg_attsd-exam&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=LorenzoMorg_attsd-exam)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=LorenzoMorg_attsd-exam&metric=sqale_index)](https://sonarcloud.io/dashboard?id=LorenzoMorg_attsd-exam)
 
-
+To use the application:
+- from the command line terminal go into the docker-compose.yml folder
+- execute the command "docker-compose up" that start the mysql database in a docker container
+- run the application
