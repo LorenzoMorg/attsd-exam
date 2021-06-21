@@ -130,12 +130,7 @@
 	      <artifactId>webdrivermanager</artifactId>
 	      <version>3.6.1</version>
 	      <scope>test</scope>
-	    </dependency>	
-		<dependency>
-	      <groupId>org.webjars</groupId>
-	      <artifactId>bootstrap</artifactId>
-	      <version>4.3.1</version>
-	    </dependency>	    
+	    </dependency>		    
 	</dependencies>
 
  <build>
@@ -297,7 +292,7 @@
 		</profile>	
   
    <profile>
-      <id>itTest</id>
+      <id>it_tests</id>
       <properties>
         <skip.integration-tests>false</skip.integration-tests>
         <DS.MYSQL_DATABASE>DS_DATABASE_TEST</DS.MYSQL_DATABASE>
@@ -322,7 +317,7 @@
 
     
     <profile>
-			<id>e2e</id>
+			<id>e2e_tests</id>
 			      <activation>
 			        <activeByDefault>false</activeByDefault>
 			      </activation>
