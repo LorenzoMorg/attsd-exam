@@ -1,0 +1,15 @@
+# to use it write "docker-compose up" on terminal
+version: '3.1'
+
+services:
+
+  db:
+    image: mysql:8.0.16
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: DS_DATABASE
+      MYSQL_USER: springuser
+      MYSQL_PASSWORD: springuser
+    ports:
+      - 3306:3306
