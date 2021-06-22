@@ -33,7 +33,7 @@ public class DressShopRestController {
 	}
 
 	@GetMapping("/dressShops/{id}")
-	public DressShop oneDressShop(@PathVariable long id) {
+	public DressShop oneDressShop(@PathVariable Long id) {
 		return dressShopService.getDressShopById(id);
 	}
 
@@ -47,7 +47,7 @@ public class DressShopRestController {
 	}
 
 	@PutMapping("/dressShops/update/{id}")
-	public DressShop updateDressShop(@PathVariable long id, @RequestBody DressShopDTO dsDTO) {
+	public DressShop updateDressShop(@PathVariable Long id, @RequestBody DressShopDTO dsDTO) {
 		DressShop ds = new DressShop();
 		ds.setName(dsDTO.getName());
 		ds.setTargetPrice(dsDTO.getTargetPrice());	
@@ -56,7 +56,7 @@ public class DressShopRestController {
 	}
 
 	@DeleteMapping("/dressShops/delete/{id}")
-	public void deleteDressShop(@PathVariable long id) {
+	public void deleteDressShop(@PathVariable Long id) {
 		DressShop dressShopById = dressShopService.getDressShopById(id);
 		dressShopService.delete(dressShopById);
 }

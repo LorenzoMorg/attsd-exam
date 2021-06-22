@@ -65,7 +65,7 @@ public class DressShopWebControllerTest {
 
 	@Test
 	public void test_notEmptyDressShopList() throws Exception {
-		List<DressShop> dressShops = Arrays.asList(new DressShop(Long.valueOf(1), "Colmar", 30));
+		List<DressShop> dressShops = Arrays.asList(new DressShop(1L, "Colmar", 30L));
 		when(dressShopService.getAllDressShops()).thenReturn(dressShops);
 		mvc.perform(get("/")).andExpect(view().name("index")).andExpect(model().attribute("dressShops", dressShops))
 				.andExpect(model().attribute("message", ""));
@@ -74,7 +74,7 @@ public class DressShopWebControllerTest {
 
 	@Test
 	public void test_singleDressShop() throws Exception {
-		DressShop ds = new DressShop(Long.valueOf(1), "Blumarine", 23);
+		DressShop ds = new DressShop(1L, "Blumarine", 23L);
 		when(dressShopService.getDressShopById(Long.valueOf(1))).thenReturn(ds);
 		String id = "1";
 		mvc.perform(get("/edit?id="+id)).andExpect(view().name("edit"))
@@ -91,7 +91,7 @@ public class DressShopWebControllerTest {
 
 	@Test
 	public void test_postDressShop() throws Exception {
-		DressShopDTO dsDTO = new DressShopDTO(null, "Birkenstock", 45);
+		DressShopDTO dsDTO = new DressShopDTO(null, "Birkenstock", 45L);
 		mvc.perform(post("/save").param("name", dsDTO.getName())
 				.param("targetPrice", "" + dsDTO.getTargetPrice())).andExpect(view().name("redirect:/"));
 		DressShop ds = new DressShop();
@@ -104,7 +104,7 @@ public class DressShopWebControllerTest {
 	@Test
 	public void test_newDressShop() throws Exception {
 		mvc.perform(get("/new")).andExpect(view().name("edit"))
-				.andExpect(model().attribute("dressShop", new DressShop(null, null, 0)))
+				.andExpect(model().attribute("dressShop", new DressShop()))
 				.andExpect(model().attribute("message", ""));
 		verifyNoInteractions(dressShopService);
 	}
@@ -120,7 +120,7 @@ public class DressShopWebControllerTest {
 	
 	@Test
 	public void test_deleteDressShop() throws Exception {
-		DressShop ds = new DressShop(Long.valueOf(1), "Diadora", 30);
+		DressShop ds = new DressShop(1L, "Diadora", 30L);
 		when(dressShopService.getDressShopById(Long.valueOf(1))).thenReturn(ds);
 		String id = "1";
 		mvc.perform(get("/delete?id="+id)).andExpect(view().name("redirect:/"));

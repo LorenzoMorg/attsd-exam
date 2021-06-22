@@ -21,8 +21,8 @@ addons:
 script: 
   - cd attsd-spring-project 
   - mvn clean verify -Pjacoco coveralls:report
-  - mvn verify -PitTest
-  - mvn verify -Pe2e 
+  - mvn clean verify -Pit_tests
+  - mvn clean verify -Pe2e_tests
 
 cache:
    directories:

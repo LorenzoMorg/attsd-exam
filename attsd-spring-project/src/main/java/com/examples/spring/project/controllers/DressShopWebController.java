@@ -15,18 +15,16 @@ import com.examples.spring.project.services.DressShopService;
 
 @Controller
 public class DressShopWebController {
-
+	
+	@Autowired
 	private DressShopService dressShopService;
+	
 	public static final String REDIRECT = "redirect:/";
 	public static final String MESSAGE = "message";
 	public static final String HOMEPAGE = "index";
 	public static final String EDIT = "edit";
 	public static final String ERROR = "error";
 
-	@Autowired
-	public DressShopWebController(DressShopService dressShopService) {
-		this.dressShopService = dressShopService;
-	}
 
 	@GetMapping("/")
 	public String index(Model model) {
@@ -36,8 +34,8 @@ public class DressShopWebController {
 		return HOMEPAGE;
 	}
 
-	@GetMapping(value = "/edit")
-	public String editDressShop(@RequestParam(name = "id") long id, Model model) {
+	@GetMapping("/edit")
+	public String editDressShop(@RequestParam(name = "id") Long id, Model model) {
 		DressShop dressShopById = dressShopService.getDressShopById(id);
 		if (dressShopById != null) {
 			model.addAttribute("dressShop", dressShopById);
@@ -50,7 +48,7 @@ public class DressShopWebController {
 	}
 
 	@PostMapping("/save")
-	public String saveDressShop(DressShopDTO dsDTO, String name, int targetPrice) {
+	public String saveDressShop(DressShopDTO dsDTO, String name, Long targetPrice) {
 		DressShop ds = new DressShop();
 		ds.setId(dsDTO.getId());
 		ds.setName(name);
@@ -69,8 +67,8 @@ public class DressShopWebController {
 		return EDIT;
 	}
 
-	@GetMapping(value = "/delete")
-	public String deleteDressShop(@RequestParam(name = "id") long id, Model model) {
+	@GetMapping("/delete")
+	public String deleteDressShop(@RequestParam(name = "id") Long id, Model model) {
 		DressShop dressShopById = dressShopService.getDressShopById(id);
 		if (dressShopById != null) {
 			dressShopService.delete(dressShopById);

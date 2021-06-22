@@ -41,7 +41,7 @@ public class DressShopServiceWithMockBeanTest {
 
 	@Test
 	public void test_getAllDressShopsWithOneDressShop() {
-		DressShop ds= new DressShop(1L, "firstDS", 18);
+		DressShop ds= new DressShop(1L, "firstDS", 18L);
 		when(dressShopRepository.findAll())
 				.thenReturn(Arrays.asList(ds));
 		assertThat(dressShopService.getAllDressShops()).containsExactly(ds);
@@ -50,8 +50,8 @@ public class DressShopServiceWithMockBeanTest {
 
 	@Test
 	public void test_getAllDressShopsWithSomeDressShops() {
-		DressShop dressShop1 = new DressShop(1L, "firstDS", 30);
-		DressShop dressShop2 = new DressShop(2L, "secondDS", 45);
+		DressShop dressShop1 = new DressShop(1L, "firstDS", 30L);
+		DressShop dressShop2 = new DressShop(2L, "secondDS", 45L);
 		when(dressShopRepository.findAll()).thenReturn(Arrays.asList(dressShop1, dressShop2));
 		assertThat(dressShopService.getAllDressShops()).containsExactly(dressShop1, dressShop2);
 		verify(dressShopRepository, times(1)).findAll();
@@ -59,23 +59,23 @@ public class DressShopServiceWithMockBeanTest {
 
 	@Test
 	public void test_getDressShopByIdFound() {
-		DressShop dressShop = new DressShop(1L, "firstDS", 30);
+		DressShop dressShop = new DressShop(1L, "firstDS", 30L);
 		Optional<DressShop> expected = Optional.of(dressShop);
 		when(dressShopRepository.findById(1L)).thenReturn(expected);
-		assertThat(dressShopService.getDressShopById(1)).isSameAs(dressShop);
+		assertThat(dressShopService.getDressShopById(1L)).isSameAs(dressShop);
 		verify(dressShopRepository, times(1)).findById(1L);
 	}
 
 	@Test
 	public void test_getDressShopByIdNotFound() {
-		DressShop actual = dressShopService.getDressShopById(1);
+		DressShop actual = dressShopService.getDressShopById(1L);
 		assertNull(actual);
 		verify(dressShopRepository, times(1)).findById(1L);
 	}
 
 	@Test
 	public void test_deleteDressShop() {
-		DressShop ds = new DressShop(1L, "Lacoste", 18);
+		DressShop ds = new DressShop(1L, "Lacoste", 18L);
 		dressShopService.delete(ds);
 		verify(dressShopRepository, times(1)).delete(ds);
 	}
@@ -89,12 +89,12 @@ public class DressShopServiceWithMockBeanTest {
 	@Test
 	public void test_saveIntoDb() {
 		ArgumentCaptor<DressShop> captor = ArgumentCaptor.forClass(DressShop.class);
-		DressShop ds = new DressShop(1L, "Lacoste", 18);
+		DressShop ds = new DressShop(1L, "Lacoste", 18L);
 		dressShopService.saveIntoDb(ds);
 		verify(dressShopRepository, times(1)).save(captor.capture());
 		DressShop passedToRepository = captor.getValue();
 		assertEquals(Long.valueOf(1), passedToRepository.getId());
 		assertEquals("Lacoste", passedToRepository.getName());
-		assertEquals(18, passedToRepository.getTargetPrice());
+		assertEquals(Long.valueOf(18), passedToRepository.getTargetPrice());
 	}
 }
