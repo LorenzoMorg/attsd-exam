@@ -26,3 +26,4 @@ To use the application:
 - from the command line terminal go into the docker-compose.yml folder
 - execute the command "docker-compose up" that start the mysql database in a docker container
 - run the application
+- go to the website (localhost:8080)
