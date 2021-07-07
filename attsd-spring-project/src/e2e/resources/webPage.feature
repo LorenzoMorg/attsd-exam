@@ -8,5 +8,4 @@ Feature: listing and editing
 	Scenario: List current dressShop
   Given Some dressShops are in the database
   When The User is on HomePage
-  Then The table must show the dressShop with name "ds1" and target price "20"
-  And The table must show the dressShop with name "ds2" and target price "30"
+  Then The table must show the dressShop with name "ds2" and target price "30"
